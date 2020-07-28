@@ -1,0 +1,87 @@
+{{indent}}    <standard-workflow>
+{{indent}}      <unique-id>{{pathPrefix}} API</unique-id>
+{{indent}}      <consumer class="jetty-message-consumer">
+{{indent}}        <unique-id>/{{pathPrefix}}/*</unique-id>
+{{indent}}        <path>/{{pathPrefix}}/*</path>
+{{indent}}        <parameter-handler class="jetty-http-parameters-as-metadata"/>
+{{indent}}        <header-handler class="jetty-http-ignore-headers"/>
+{{indent}}      </consumer>
+{{indent}}      <service-collection class="service-list">
+{{indent}}        <services>
+{{indent}}          <branching-service-collection>
+{{indent}}            <unique-id>HTTP Router</unique-id>
+{{indent}}            <first-service-id>Route</first-service-id>
+{{indent}}            <services>
+{{indent}}              <jetty-routing-service>
+{{indent}}                <unique-id>Route</unique-id>
+                  {{#operation}}
+{{indent}}                <route>
+{{indent}}                  <condition>
+                    {{#hasPathParams}}
+{{indent}}                    <url-pattern>^/{{baseName}}{{#subresourceOperation}}{{#lambdaOpRegexPath}}{{/lambdaOpRegexPath}}{{/subresourceOperation}}$</url-pattern>
+                      {{#pathParams}}
+{{indent}}                    <metadata-key>{{paramName}}</metadata-key>
+                      {{/pathParams}}
+                    {{/hasPathParams}}
+                    {{^hasPathParams}}
+{{indent}}                    <url-pattern>^/{{baseName}}{{#subresourceOperation}}{{path}}{{/subresourceOperation}}$</url-pattern>
+                    {{/hasPathParams}}
+{{indent}}                    <method>{{httpMethod}}</method>
+{{indent}}                  </condition>
+{{indent}}                  <service-id>{{summary}}</service-id>
+{{indent}}                </route>
+                  {{/operation}}
+{{indent}}                <default-service-id>NotHandled</default-service-id>
+{{indent}}              </jetty-routing-service>
+                  {{#operation}}
+{{indent}}              <service-list>
+{{indent}}                <unique-id>{{summary}}</unique-id>
+{{indent}}                <services>
+{{indent}}                  <!-- ... The user fills in his thing here. -->
+{{indent}}                </services>
+{{indent}}              </service-list>
+                  {{/operation}}
+{{indent}}              <service-list>
+{{indent}}                <unique-id>NotHandled</unique-id>
+{{indent}}                <services>
+{{indent}}                  <add-metadata-service>
+{{indent}}                    <unique-id>Add 400 Response Code</unique-id>
+{{indent}}                    <metadata-element>
+{{indent}}                      <key>ResponseCode</key>
+{{indent}}                      <value>400</value>
+{{indent}}                    </metadata-element>
+{{indent}}                  </add-metadata-service>
+{{indent}}                  <payload-from-template>
+{{indent}}                    <unique-id>Add Not Handled Status Message</unique-id>
+{{indent}}                    <metadata-tokens/>
+{{indent}}                    <template><![CDATA[{"Status" : "Not Handled; please check"}]]></template>
+{{indent}}                  </payload-from-template>
+{{indent}}                </services>
+{{indent}}              </service-list>
+{{indent}}            </services>
+{{indent}}          </branching-service-collection>
+{{indent}}          <standalone-producer>
+{{indent}}            <unique-id>SendResponse</unique-id>
+{{indent}}            <producer class="jetty-standard-response-producer">
+{{indent}}              <unique-id>ResponseProducer</unique-id>
+{{indent}}              <status-provider class="http-metadata-status">
+{{indent}}                <code-key>ResponseCode</code-key>
+{{indent}}                <default-status>OK_200</default-status>
+{{indent}}              </status-provider>
+{{indent}}              <response-header-provider class="jetty-no-response-headers"/>
+                  {{#notEmpty operation}}
+                    {{#operation.0.hasProduces}}
+                      {{#operation.0.produces.0}}
+{{indent}}              <content-type-provider class="http-metadata-content-type-provider">
+{{indent}}                <metadata-key>ResponseContenType</metadata-key>
+{{indent}}                <default-mime-type>{{{mediaType}}}</default-mime-type>
+{{indent}}              </content-type-provider>
+                      {{/operation.0.produces.0}}
+                    {{/operation.0.hasProduces}}
+                  {{/notEmpty}}
+{{indent}}              <send-payload>true</send-payload>
+{{indent}}            </producer>
+{{indent}}          </standalone-producer>
+{{indent}}        </services>
+{{indent}}      </service-collection>
+{{indent}}    </standard-workflow>

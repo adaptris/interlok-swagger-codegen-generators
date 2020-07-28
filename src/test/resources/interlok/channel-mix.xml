@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Simple Contact Manager And Gatekeeper Lookup API 1.0.0 (This is a mix api.) -->
+<channel>
+  <unique-id>Simple Contact Manager And Gatekeeper Lookup API</unique-id>
+  <auto-start>false</auto-start>
+  <consume-connection class="jetty-embedded-connection">
+    <unique-id>Embedded Jetty Connection</unique-id>
+  </consume-connection>
+  <workflow-list>
+    <pooling-workflow>
+      <unique-id>Get Soiltype information</unique-id>
+      <send-events>false</send-events>
+      <consumer class="jetty-message-consumer">
+        <unique-id>Get Soiltype information</unique-id>
+        <path>/lookups/gatekeeper/soiltypes</path>
+        <methods>GET</methods>
+        <parameter-handler class="jetty-http-parameters-as-metadata"/>
+        <header-handler class="jetty-http-ignore-headers"/>
+      </consumer>
+      <service-collection class="service-list">
+        <services>
+          <!-- ... The user fills in his thing here. -->
+          <standalone-producer>
+            <unique-id>SendResponse</unique-id>
+            <producer class="jetty-standard-response-producer">
+              <unique-id>ResponseProducer</unique-id>
+              <status-provider class="http-configured-status">
+                <status>OK_200</status>
+                <text>The Soil Information</text>
+              </status-provider>
+              <content-type-provider class="http-configured-content-type-provider">
+                <mime-type>application/json</mime-type>
+              </content-type-provider>
+              <send-payload>true</send-payload>
+            </producer>
+          </standalone-producer>
+        </services>
+      </service-collection>
+    </pooling-workflow>
+    <pooling-workflow>
+      <unique-id>Daily Historical Weather</unique-id>
+      <send-events>false</send-events>
+      <consumer class="jetty-message-consumer">
+        <unique-id>Daily Historical Weather</unique-id>
+        <path>/lookups/gatekeeper/weather/daily</path>
+        <methods>GET</methods>
+        <parameter-handler class="jetty-http-parameters-as-metadata"/>
+        <header-handler class="jetty-http-ignore-headers"/>
+      </consumer>
+      <service-collection class="service-list">
+        <services>
+          <!-- ... The user fills in his thing here. -->
+          <standalone-producer>
+            <unique-id>SendResponse</unique-id>
+            <producer class="jetty-standard-response-producer">
+              <unique-id>ResponseProducer</unique-id>
+              <status-provider class="http-configured-status">
+                <status>OK_200</status>
+                <text>The Weather</text>
+              </status-provider>
+              <content-type-provider class="http-configured-content-type-provider">
+                <mime-type>application/json</mime-type>
+              </content-type-provider>
+              <send-payload>true</send-payload>
+            </producer>
+          </standalone-producer>
+        </services>
+      </service-collection>
+    </pooling-workflow>
+    <standard-workflow>
+      <unique-id>subPath API</unique-id>
+      <consumer class="jetty-message-consumer">
+        <unique-id>/subPath/*</unique-id>
+        <path>/subPath/*</path>
+        <parameter-handler class="jetty-http-parameters-as-metadata"/>
+        <header-handler class="jetty-http-ignore-headers"/>
+      </consumer>
+      <service-collection class="service-list">
+        <services>
+          <branching-service-collection>
+            <unique-id>HTTP Router</unique-id>
+            <first-service-id>Route</first-service-id>
+            <services>
+              <jetty-routing-service>
+                <unique-id>Route</unique-id>
+                <route>
+                  <condition>
+                    <url-pattern>^/subPath/contacts/([^\/]+)/addresses/(.+)$</url-pattern>
+                    <metadata-key>contactId</metadata-key>
+                    <metadata-key>addressName</metadata-key>
+                    <method>GET</method>
+                  </condition>
+                  <service-id>Get a contact address by contactId and addressName</service-id>
+                </route>
+                <route>
+                  <condition>
+                    <url-pattern>^/subPath/contacts/(.+)$</url-pattern>
+                    <metadata-key>contactId</metadata-key>
+                    <method>DELETE</method>
+                  </condition>
+                  <service-id>Delete a contact by contactId</service-id>
+                </route>
+                <route>
+                  <condition>
+                    <url-pattern>^/subPath/contacts/(.+)$</url-pattern>
+                    <metadata-key>contactId</metadata-key>
+                    <method>GET</method>
+                  </condition>
+                  <service-id>Get a contact by contactId</service-id>
+                </route>
+                <route>
+                  <condition>
+                    <url-pattern>^/subPath/contacts/(.+)$</url-pattern>
+                    <metadata-key>contactId</metadata-key>
+                    <method>PATCH</method>
+                  </condition>
+                  <service-id>Update an existing contact</service-id>
+                </route>
+                <route>
+                  <condition>
+                    <url-pattern>^/subPath/contacts$</url-pattern>
+                    <method>GET</method>
+                  </condition>
+                  <service-id>Get All the contacts</service-id>
+                </route>
+                <route>
+                  <condition>
+                    <url-pattern>^/subPath/contacts$</url-pattern>
+                    <method>POST</method>
+                  </condition>
+                  <service-id>Add a new contact</service-id>
+                </route>
+                <default-service-id>NotHandled</default-service-id>
+              </jetty-routing-service>
+              <service-list>
+                <unique-id>Get a contact address by contactId and addressName</unique-id>
+                <services>
+                  <!-- ... The user fills in his thing here. -->
+                </services>
+              </service-list>
+              <service-list>
+                <unique-id>Delete a contact by contactId</unique-id>
+                <services>
+                  <!-- ... The user fills in his thing here. -->
+                </services>
+              </service-list>
+              <service-list>
+                <unique-id>Get a contact by contactId</unique-id>
+                <services>
+                  <!-- ... The user fills in his thing here. -->
+                </services>
+              </service-list>
+              <service-list>
+                <unique-id>Update an existing contact</unique-id>
+                <services>
+                  <!-- ... The user fills in his thing here. -->
+                </services>
+              </service-list>
+              <service-list>
+                <unique-id>Get All the contacts</unique-id>
+                <services>
+                  <!-- ... The user fills in his thing here. -->
+                </services>
+              </service-list>
+              <service-list>
+                <unique-id>Add a new contact</unique-id>
+                <services>
+                  <!-- ... The user fills in his thing here. -->
+                </services>
+              </service-list>
+              <service-list>
+                <unique-id>NotHandled</unique-id>
+                <services>
+                  <add-metadata-service>
+                    <unique-id>Add 400 Response Code</unique-id>
+                    <metadata-element>
+                      <key>ResponseCode</key>
+                      <value>400</value>
+                    </metadata-element>
+                  </add-metadata-service>
+                  <payload-from-template>
+                    <unique-id>Add Not Handled Status Message</unique-id>
+                    <metadata-tokens/>
+                    <template><![CDATA[{"Status" : "Not Handled; please check"}]]></template>
+                  </payload-from-template>
+                </services>
+              </service-list>
+            </services>
+          </branching-service-collection>
+          <standalone-producer>
+            <unique-id>SendResponse</unique-id>
+            <producer class="jetty-standard-response-producer">
+              <unique-id>ResponseProducer</unique-id>
+              <status-provider class="http-metadata-status">
+                <code-key>ResponseCode</code-key>
+                <default-status>OK_200</default-status>
+              </status-provider>
+              <response-header-provider class="jetty-no-response-headers"/>
+              <content-type-provider class="http-metadata-content-type-provider">
+                <metadata-key>ResponseContenType</metadata-key>
+                <default-mime-type>application/json</default-mime-type>
+              </content-type-provider>
+              <send-payload>true</send-payload>
+            </producer>
+          </standalone-producer>
+        </services>
+      </service-collection>
+    </standard-workflow>
+  </workflow-list>
+</channel>

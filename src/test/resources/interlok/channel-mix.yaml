@@ -1,0 +1,299 @@
+openapi: 3.0.1
+info:
+  title: Simple Contact Manager And Gatekeeper Lookup API
+  description: This is a mix api.
+  version: 1.0.0
+servers:
+- url: http://test.host.com:8080/
+paths:
+  /subPath/contacts:
+    get:
+      summary: Get All the contacts
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResult'
+        400:
+          description: Couldn't handle it
+          content: {}
+        500:
+          description: Error during processing
+          content: {}
+    post:
+      summary: Add a new contact
+      requestBody:
+        description: Contact that needs to be added.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactId'
+        400:
+          description: Couldn't handle it
+          content: {}
+        500:
+          description: Error during processing
+          content: {}
+      x-codegen-request-body-name: body
+  /subPath/contacts/{contactId}:
+    get:
+      summary: Get a contact by contactId
+      parameters:
+      - name: contactId
+        in: path
+        description: The ID that needs to be fetched.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResult'
+        400:
+          description: Couldn't handle it
+          content: {}
+        500:
+          description: Error during processing
+          content: {}
+    delete:
+      summary: Delete a contact by contactId
+      parameters:
+      - name: contactId
+        in: path
+        description: The ID that needs to be deleted.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactDeleted'
+        400:
+          description: Couldn't handle it
+          content: {}
+        500:
+          description: Error during processing
+          content: {}
+    patch:
+      summary: Update an existing contact
+      parameters:
+      - name: contactId
+        in: path
+        description: The ID that needs to be patched.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Contact that should be modified
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResult'
+        400:
+          description: Couldn't handle it
+          content: {}
+        500:
+          description: Error during processing
+          content: {}
+      x-codegen-request-body-name: body
+  /subPath/contacts/{contactId}/addresses/{addressName}:
+    get:
+      summary: Get a contact address by contactId and addressName
+      parameters:
+      - name: contactId
+        in: path
+        description: The ID that needs to be fetched.
+        required: true
+        schema:
+          type: string
+      - name: addressName
+        in: path
+        description: The Name of the address that needs to be fetched.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabaseResult'
+        400:
+          description: Couldn't handle it
+          content: {}
+        500:
+          description: Error during processing
+          content: {}
+  /lookups/gatekeeper/weather/daily:
+    get:
+      tags:
+      - weather
+      summary: Daily Historical Weather
+      description: |
+        Get daily weather data based on a latitude, longitude and start/end timestamp.
+      parameters:
+      - name: lat
+        in: query
+        description: Latitude component of location, e.g. 51.501364
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: lon
+        in: query
+        description: Longitude component of location, e.g. -0.14189
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: start
+        in: query
+        description: The date in yyyy-MM-dd'T'HH:mm:ssX e.g. 2016-01-01T12:00:00Z
+        required: true
+        schema:
+          type: string
+          format: dateTime
+      - name: end
+        in: query
+        description: The date in yyyy-MM-dd'T'HH:mm:ssX e.g. 2016-01-10T12:00:00Z
+        required: true
+        schema:
+          type: string
+          format: dateTime
+      responses:
+        200:
+          description: The Weather
+          content:
+            application/json: {}
+        400:
+          description: Problem with Parameters
+          content: {}
+        500:
+          description: Unexpected error
+          content: {}
+  /lookups/gatekeeper/soiltypes:
+    get:
+      tags:
+      - soil
+      summary: Get Soiltype information
+      description: Get Soil type information based on latitude + longitude
+      parameters:
+      - name: lat
+        in: query
+        description: Latitude component of location, e.g. 51.501364
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: lon
+        in: query
+        description: Longitude component of location, e.g. -0.14189
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        200:
+          description: The Soil Information
+          content:
+            application/json: {}
+        400:
+          description: Problem with Parameters
+          content: {}
+        500:
+          description: Unexpected error
+          content: {}
+components:
+  schemas:
+    ContactId:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ee57e611-1498-4652-a37c-12d55e686ca5
+    ContactDeleted:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ee57e611-1498-4652-a37c-12d55e686ca5
+        status:
+          type: string
+          enum:
+          - deleted
+    DatabaseContact:
+      type: object
+      properties:
+        id:
+          type: string
+          example: ee57e611-1498-4652-a37c-12d55e686ca5
+        FirstName:
+          type: string
+          example: John
+        LastName:
+          type: string
+          example: Smith
+        Email:
+          type: string
+          example: john.smith@abclabs.com
+        Phone:
+          type: string
+          example: +44 1234 56789
+        LastUpdated:
+          type: string
+          example: 2017-05-07 15:13:38.0
+        Created:
+          type: string
+          example: 2017-05-07 15:13:38.0
+    Contact:
+      required:
+      - Email
+      - FirstName
+      - LastName
+      - Phone
+      type: object
+      properties:
+        FirstName:
+          type: string
+          example: John
+        LastName:
+          type: string
+          example: Smith
+        Email:
+          type: string
+          example: john.smith@abclabs.com
+        Phone:
+          type: string
+          example: +44 1234 56789
+    DatabaseResult:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatabaseContact'

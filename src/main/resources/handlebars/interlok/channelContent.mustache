@@ -1,0 +1,25 @@
+{{indent}}<channel>
+{{indent}}  <unique-id>{{{appName}}}</unique-id>
+{{indent}}  <auto-start>false</auto-start>
+{{indent}}  <consume-connection class="jetty-embedded-connection">
+{{indent}}    <unique-id>Embedded Jetty Connection</unique-id>
+{{indent}}  </consume-connection>
+{{indent}}  <workflow-list>
+    {{#apiInfo}}
+      {{#apis}}
+        {{#operations}}
+          {{#useRoutingService}}
+{{>workflowWithRoutingService}}
+
+          {{/useRoutingService}}
+          {{^useRoutingService}}
+            {{#operation}}
+{{>poolingWorkflow}}
+
+            {{/operation}}
+      	  {{/useRoutingService}}
+        {{/operations}}
+      {{/apis}}
+    {{/apiInfo}}
+{{indent}}  </workflow-list>
+{{indent}}</channel>

@@ -1,0 +1,335 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Simple Contact Manager",
+    "description": "This is a simple little contact manager database.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://test.host.com:8080/"
+    }
+  ],
+  "paths": {
+    "/subPath/contacts": {
+      "get": {
+        "summary": "Get All the contacts",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Couldn't handle it",
+            "content": {}
+          },
+          "500": {
+            "description": "Error during processing",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new contact",
+        "requestBody": {
+          "description": "Contact that needs to be added.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactId"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Couldn't handle it",
+            "content": {}
+          },
+          "500": {
+            "description": "Error during processing",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/subPath/contacts/{contactId}": {
+      "get": {
+        "summary": "Get a contact by contactId",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "The ID that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Couldn't handle it",
+            "content": {}
+          },
+          "500": {
+            "description": "Error during processing",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a contact by contactId",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "The ID that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDeleted"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Couldn't handle it",
+            "content": {}
+          },
+          "500": {
+            "description": "Error during processing",
+            "content": {}
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update an existing contact",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "The ID that needs to be patched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Contact that should be modified",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Couldn't handle it",
+            "content": {}
+          },
+          "500": {
+            "description": "Error during processing",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/subPath/contacts/{contactId}/addresses/{addressName}": {
+      "get": {
+        "summary": "Get a contact address by contactId and addressName",
+        "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "The ID that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "addressName",
+            "in": "path",
+            "description": "The Name of the address that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatabaseResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Couldn't handle it",
+            "content": {}
+          },
+          "500": {
+            "description": "Error during processing",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ContactId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "ee57e611-1498-4652-a37c-12d55e686ca5"
+          }
+        }
+      },
+      "ContactDeleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "ee57e611-1498-4652-a37c-12d55e686ca5"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "deleted"
+            ]
+          }
+        }
+      },
+      "DatabaseContact": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "ee57e611-1498-4652-a37c-12d55e686ca5"
+          },
+          "FirstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "Email": {
+            "type": "string",
+            "example": "john.smith@abclabs.com"
+          },
+          "Phone": {
+            "type": "string",
+            "example": "+44 1234 56789"
+          },
+          "LastUpdated": {
+            "type": "string",
+            "example": "2017-05-07T15:13:38.000Z"
+          },
+          "Created": {
+            "type": "string",
+            "example": "2017-05-07T15:13:38.000Z"
+          }
+        }
+      },
+      "Contact": {
+        "required": [
+          "Email",
+          "FirstName",
+          "LastName",
+          "Phone"
+        ],
+        "type": "object",
+        "properties": {
+          "FirstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "Email": {
+            "type": "string",
+            "example": "john.smith@abclabs.com"
+          },
+          "Phone": {
+            "type": "string",
+            "example": "+44 1234 56789"
+          }
+        }
+      },
+      "DatabaseResult": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatabaseContact"
+            }
+          }
+        }
+      }
+    }
+  }
+}

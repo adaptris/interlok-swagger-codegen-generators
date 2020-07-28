@@ -1,0 +1,129 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Gatekeeper Lookup API",
+    "description": "Gatekeeper Lookups",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://test.host.com:8080/"
+    }
+  ],
+  "paths": {
+    "/lookups/gatekeeper/weather/daily": {
+      "get": {
+        "tags": [
+          "weather"
+        ],
+        "summary": "Daily Historical Weather",
+        "description": "Get daily weather data based on a latitude, longitude and start/end timestamp.\n",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "Latitude component of location, e.g. 51.501364",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "description": "Longitude component of location, e.g. -0.14189",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "The date in yyyy-MM-dd'T'HH:mm:ssX e.g. 2016-01-01T12:00:00Z",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "dateTime"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "The date in yyyy-MM-dd'T'HH:mm:ssX e.g. 2016-01-10T12:00:00Z",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "dateTime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Weather",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "Problem with Parameters",
+            "content": {}
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/lookups/gatekeeper/soiltypes": {
+      "get": {
+        "tags": [
+          "soil"
+        ],
+        "summary": "Get Soiltype information",
+        "description": "Get Soil type information based on latitude + longitude",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "Latitude component of location, e.g. 51.501364",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "description": "Longitude component of location, e.g. -0.14189",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Soil Information",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "Problem with Parameters",
+            "content": {}
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {}
+          }
+        }
+      }
+    }
+  }
+}

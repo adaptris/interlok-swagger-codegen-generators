@@ -1,0 +1,36 @@
+{{indent}}    <pooling-workflow>
+{{indent}}      <unique-id>{{summary}}</unique-id>
+{{indent}}      <send-events>false</send-events>
+{{indent}}      <consumer class="jetty-message-consumer">
+{{indent}}        <unique-id>{{summary}}</unique-id>
+{{indent}}        <path>{{path}}</path>
+{{indent}}        <methods>{{httpMethod}}</methods>
+{{indent}}        <parameter-handler class="jetty-http-parameters-as-metadata"/>
+{{indent}}        <header-handler class="jetty-http-ignore-headers"/>
+{{indent}}      </consumer>
+{{indent}}      <service-collection class="service-list">
+{{indent}}        <services>
+{{indent}}          <!-- ... The user fills in his thing here. -->
+{{indent}}          <standalone-producer>
+{{indent}}            <unique-id>SendResponse</unique-id>
+{{indent}}            <producer class="jetty-standard-response-producer">
+{{indent}}              <unique-id>ResponseProducer</unique-id>
+                  {{#responses.0}}
+{{indent}}              <status-provider class="http-configured-status">
+{{indent}}                <status>{{code}}</status>
+{{indent}}                <text>{{message}}</text>
+{{indent}}              </status-provider>
+                  {{/responses.0}}
+                  {{#hasProduces}}
+                    {{#produces.0}}
+{{indent}}              <content-type-provider class="http-configured-content-type-provider">
+{{indent}}                <mime-type>{{{mediaType}}}</mime-type>
+{{indent}}              </content-type-provider>
+                    {{/produces.0}}
+                  {{/hasProduces}}
+{{indent}}              <send-payload>true</send-payload>
+{{indent}}            </producer>
+{{indent}}          </standalone-producer>
+{{indent}}        </services>
+{{indent}}      </service-collection>
+{{indent}}    </pooling-workflow>
