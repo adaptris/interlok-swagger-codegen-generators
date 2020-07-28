@@ -1,0 +1,44 @@
+package com.adaptris.io.swagger.codegen.v3.generators.handlebars;
+
+import com.github.jknack.handlebars.Helper;
+import com.github.jknack.handlebars.Options;
+import com.github.jknack.handlebars.Options.Buffer;
+import io.swagger.codegen.v3.CodegenConstants;
+import io.swagger.codegen.v3.CodegenProperty;
+
+import static com.adaptris.io.swagger.codegen.v3.generators.handlebars.ExtensionHelper.getBooleanValue;
+
+import java.io.IOException;
+
+public class BaseItemsHelper implements Helper<CodegenProperty> {
+    public static final String NAME = "baseItems";
+
+    @Override
+    public Object apply(CodegenProperty codegenProperty, Options options) throws IOException {
+        final Buffer buffer = options.buffer();
+
+        if (codegenProperty == null) {
+            buffer.append(options.inverse());
+            return buffer;
+        }
+
+        CodegenProperty baseItems = getBaseItemsProperty(codegenProperty);
+
+        if (baseItems != null) {
+            buffer.append(options.fn(baseItems));
+        } else {
+            buffer.append(options.inverse());
+        }
+        return buffer;
+    }
+
+    public static CodegenProperty getBaseItemsProperty(CodegenProperty property) {
+        CodegenProperty currentProperty = property;
+        while (currentProperty != null
+                && (getBooleanValue(currentProperty, CodegenConstants.IS_MAP_CONTAINER_EXT_NAME)
+                || getBooleanValue(currentProperty, CodegenConstants.IS_LIST_CONTAINER_EXT_NAME))) {
+            currentProperty = currentProperty.items;
+        }
+        return currentProperty;
+    }
+}
