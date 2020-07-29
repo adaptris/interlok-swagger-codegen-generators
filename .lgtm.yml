@@ -1,0 +1,19 @@
+extraction:
+  java:
+    index:
+      maven:
+        version: 3.3.3
+
+path_classifiers:
+  docs:
+    - "LICENSE*"
+    - "*.md"
+    - "*.html"
+  ci:
+    - "appveyor.yml"
+    - ".codecov.yml"
+    - ".travis.yml"
+    - ".circleci"
+    - ".dependabot"
+    - ".github"
+    - ".lgtm.yml"
