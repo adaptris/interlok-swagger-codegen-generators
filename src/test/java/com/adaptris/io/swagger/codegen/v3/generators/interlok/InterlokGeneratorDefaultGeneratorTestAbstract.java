@@ -2,6 +2,7 @@ package com.adaptris.io.swagger.codegen.v3.generators.interlok;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -28,7 +29,6 @@ import io.swagger.codegen.v3.ClientOpts;
 import io.swagger.codegen.v3.CodegenConfig;
 import io.swagger.codegen.v3.CodegenType;
 import io.swagger.codegen.v3.DefaultGenerator;
-import io.swagger.parser.SwaggerParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import io.swagger.v3.parser.core.models.SwaggerParseResult;
@@ -86,12 +86,8 @@ public abstract class InterlokGeneratorDefaultGeneratorTestAbstract extends Abst
 
   @Test
   public void testGenerateFromNull() throws Exception {
-    try {
-      new SwaggerParser().parse(null);
-      fail("Should have thrown a NullPointerException");
-    } catch (NullPointerException npe) {
-      // Should come here
-    }
+    OpenAPI openApi = parse(null);
+    assertNull(openApi);
   }
 
   @Test

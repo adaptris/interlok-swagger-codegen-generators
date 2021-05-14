@@ -19,6 +19,10 @@ public class StringUtilHelper {
         }
         return builder.toString();
     }
+    
+    public String toLowerCase(String string) {
+        return string.toLowerCase();
+    }
 
     public String backSlash() {
         return "\\";
