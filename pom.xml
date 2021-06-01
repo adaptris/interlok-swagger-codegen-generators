@@ -12,7 +12,7 @@
 
     <groupId>com.adaptris</groupId>
     <artifactId>interlok-swagger-codegen-generators</artifactId>
-    <version>1.0.25</version>
+    <version>1.0.26</version>
     <packaging>jar</packaging>
     <name>interlok-swagger-codegen-generators (simplifed core library)</name>
     <description>Copy of swagger-codegen-generators (core library) (https://github.com/swagger-api/swagger-codegen-generators) and trimmed of all the language converters.</description>
@@ -214,6 +214,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- Required by swagger-codegen but a newer version -->
+        <dependency>
+            <groupId>com.github.jknack</groupId>
+            <artifactId>handlebars</artifactId>
+            <version>4.2.0</version>
+        </dependency>
         <dependency>
             <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen</artifactId>
@@ -314,13 +320,13 @@
         </dependency>
     </dependencies>
     <properties>
-        <swagger-codegen-version>3.0.25</swagger-codegen-version>
-        <swagger-parser-version>2.0.23</swagger-parser-version>
-        <swagger-core-version>2.1.4</swagger-core-version>
-        <jackson-version>2.11.4</jackson-version>
+        <swagger-codegen-version>3.0.26</swagger-codegen-version>
+        <swagger-parser-version>2.0.26</swagger-parser-version>
+        <swagger-core-version>2.1.9</swagger-core-version>
+        <jackson-version>2.12.3</jackson-version>
 <!--         <scala-version>2.11.1</scala-version> -->
 <!--         <felix-version>3.3.0</felix-version> -->
-        <commons-io-version>2.7</commons-io-version>
+        <commons-io-version>2.9.0</commons-io-version>
 <!--         <commons-cli-version>1.2</commons-cli-version> -->
         <junit-version>4.13.1</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
