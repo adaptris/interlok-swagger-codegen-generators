@@ -12,7 +12,7 @@
 
     <groupId>com.adaptris</groupId>
     <artifactId>interlok-swagger-codegen-generators</artifactId>
-    <version>1.0.26</version>
+    <version>1.0.27-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>interlok-swagger-codegen-generators (simplifed core library)</name>
     <description>Copy of swagger-codegen-generators (core library) (https://github.com/swagger-api/swagger-codegen-generators) and trimmed of all the language converters.</description>
