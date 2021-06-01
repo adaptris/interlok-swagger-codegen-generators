@@ -210,16 +210,16 @@
                 <artifactId>guava</artifactId>
                 <version>30.1.1-jre</version>
             </dependency>
-            
-            <dependency>
-                <groupId>com.github.jknack</groupId>
-                <artifactId>handlebars</artifactId>
-                <version>4.2.0</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <!-- Required by swagger-codegen but a newer version -->
+        <dependency>
+            <groupId>com.github.jknack</groupId>
+            <artifactId>handlebars</artifactId>
+            <version>4.2.0</version>
+        </dependency>
         <dependency>
             <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen</artifactId>
