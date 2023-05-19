@@ -79,7 +79,8 @@
                 </dependencies>
                 <configuration>
                     <testNGArtifactName>none:none</testNGArtifactName>
-                    <argLine>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.util=ALL-UNNAMED</argLine>
+                    <!-- For Java17 add - -add-opens=java.base/java.util=ALL-UNNAMED -->
+                    <argLine>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar -XX:+IgnoreUnrecognizedVMOptions</argLine>
                 </configuration>
             </plugin>
             <plugin>
