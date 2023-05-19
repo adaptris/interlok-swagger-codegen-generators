@@ -1,0 +1,55 @@
+name: Maven Publish
+
+on:
+  push:
+    branches:
+    - develop
+#  schedule:
+#    - cron: 0 3 * * * # Daily 3 a.m.
+
+env:
+  PUBLISH_SERVER: 'adaptris-snapshots'
+
+jobs:
+  gradle-publish:
+    name: Gradle Publish
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: zulu
+        java-version: 17
+    - name: Cache local Maven repository
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Execute Maven build
+      run: |
+        mvn --batch-mode test
+    - name: codecov.io
+      if: ${{!github.event.repository.private}}
+      uses: codecov/codecov-action@v3.1.4
+    - name: Gradle Dependency Check Analyze
+      run: |
+        mvn dependency-check:check
+    - name: Set up maven settings.xml
+      uses: s4u/maven-settings-action@v2.6.0
+      with:
+        servers: '[{"id": "${{ env.PUBLISH_SERVER }}", "username": "deployment", "password": "${{ secrets.NEXUS_REPO_PASSWORD }}"}]'
+    - name: Publish package
+      if: success()
+      run: |
+        mvn --batch-mode deploy
+    - name: Notify Teams About Failure and Recovery
+      if: always()
+      uses: interlok-tooling/notify-teams@main
+      with:
+        teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
