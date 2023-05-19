@@ -2,7 +2,7 @@
 
 [![GitHub tag](https://img.shields.io/github/tag/adaptris/interlok-swagger-codegen-generators.svg)](https://github.com/adaptris/interlok-swagger-codegen-generators/tags)
 [![license](https://img.shields.io/github/license/adaptris/interlok-swagger-codegen-generators.svg)](https://github.com/adaptris/interlok-swagger-codegen-generators/blob/develop/LICENSE)
-[![Actions Status](https://github.com/adaptris/interlok-swagger-codegen-generators/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/adaptris/interlok-swagger-codegen-generators/actions)
+[![Actions Status](https://github.com/adaptris/interlok-swagger-codegen-generators/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/adaptris/interlok-swagger-codegen-generators/actions)
 [![CircleCI](https://circleci.com/gh/adaptris/interlok-swagger-codegen-generators.svg?style=svg)](https://circleci.com/gh/adaptris/interlok-swagger-codegen-generators) [![codecov](https://codecov.io/gh/adaptris/interlok-swagger-codegen-generators/branch/develop/graph/badge.svg)](https://codecov.io/gh/adaptris/interlok-swagger-codegen-generators)
 [![CodeQL](https://github.com/adaptris/interlok-swagger-codegen-generators/workflows/CodeQL/badge.svg)](https://github.com/adaptris/interlok-swagger-codegen-generators/security/code-scanning)
 [![Known Vulnerabilities](https://snyk.io/test/github/adaptris/interlok-swagger-codegen-generators/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/adaptris/interlok-swagger-codegen-generators?targetFile=build.gradle)
