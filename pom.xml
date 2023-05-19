@@ -12,7 +12,7 @@
 
     <groupId>com.adaptris</groupId>
     <artifactId>interlok-swagger-codegen-generators</artifactId>
-    <version>1.0.27-SNAPSHOT</version>
+    <version>1.0.40-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>interlok-swagger-codegen-generators (simplifed core library)</name>
     <description>Copy of swagger-codegen-generators (core library) (https://github.com/swagger-api/swagger-codegen-generators) and trimmed of all the language converters.</description>
@@ -22,19 +22,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>                
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.5.0</version>
                 <configuration>
                     <aggregate>true</aggregate>
-                    <source>1.8</source>
+                    <source>11</source>
                     <encoding>UTF-8</encoding>
                     <maxmemory>1g</maxmemory>
                     <excludePackageNames>${javadoc.package.exclude}</excludePackageNames>
@@ -55,7 +55,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -67,12 +67,19 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>2.22.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit4</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
-                    <argLine>
-                        ${surefireArgLine} -javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar
-                    </argLine>
+                    <testNGArtifactName>none:none</testNGArtifactName>
+                    <argLine>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.util=ALL-UNNAMED</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -87,7 +94,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.7</version>
                 <executions>
                     <execution>
                         <id>initialize</id>
@@ -153,7 +160,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson-version}</version>
+                <version>${jackson-databind-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -204,12 +211,6 @@
                 <artifactId>jackson-datatype-joda</artifactId>
                 <version>${jackson-version}</version>
             </dependency>
-            
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>30.1.1-jre</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -218,27 +219,12 @@
         <dependency>
             <groupId>com.github.jknack</groupId>
             <artifactId>handlebars</artifactId>
-            <version>4.2.0</version>
+            <version>4.3.1</version>
         </dependency>
         <dependency>
             <groupId>io.swagger.codegen.v3</groupId>
             <artifactId>swagger-codegen</artifactId>
             <version>${swagger-codegen-version}</version>
-			      <!-- We do not care about this for Interlok  -->
-			      <exclusions>
-			          <exclusion>
-			              <groupId>io.swagger</groupId>
-			              <artifactId>swagger-codegen</artifactId>
-			          </exclusion>
-			          <exclusion>
-			              <groupId>io.swagger</groupId>
-			              <artifactId>swagger-parser</artifactId>
-			          </exclusion>
-			          <exclusion>
-			              <groupId>io.swagger.parser.v3</groupId>
-			              <artifactId>swagger-parser-v2-converter</artifactId>
-			          </exclusion>
-			      </exclusions>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -320,24 +306,26 @@
         </dependency>
     </dependencies>
     <properties>
-        <swagger-codegen-version>3.0.26</swagger-codegen-version>
-        <swagger-parser-version>2.0.26</swagger-parser-version>
-        <swagger-core-version>2.1.9</swagger-core-version>
-        <jackson-version>2.13.4.2</jackson-version>
+        <maven.compiler.release>11</maven.compiler.release>
+        <swagger-codegen-version>3.0.43</swagger-codegen-version>
+        <swagger-parser-version>2.1.14</swagger-parser-version>
+        <swagger-core-version>2.2.10</swagger-core-version>
+        <jackson-version>2.15.1</jackson-version>
+        <jackson-databind-version>2.15.1</jackson-databind-version>
 <!--         <scala-version>2.11.1</scala-version> -->
 <!--         <felix-version>3.3.0</felix-version> -->
-        <commons-io-version>2.9.0</commons-io-version>
-<!--         <commons-cli-version>1.2</commons-cli-version> -->
-        <junit-version>4.13.1</junit-version>
+        <commons-io-version>2.11.0</commons-io-version>
+<!--         <commons-cli-version>1.5.0</commons-cli-version> -->
+        <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
-        <commons-lang-version>3.10</commons-lang-version>
-        <slf4j-version>1.7.30</slf4j-version>
+        <commons-lang-version>3.12.0</commons-lang-version>
+        <slf4j-version>1.7.36</slf4j-version>
 <!--         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version> -->
-        <testng-version>6.9.6</testng-version>
-        <surefire-version>2.22.2</surefire-version>
-        <jmockit-version>1.42</jmockit-version>
-        <reflections-version>0.9.11</reflections-version>
-        
+        <testng-version>7.7.1</testng-version>
+        <surefire-version>3.0.0</surefire-version>
+        <jmockit-version>1.49</jmockit-version>
+        <reflections-version>0.10.2</reflections-version>
+
         <snapshot.repo.url>https://nexus.adaptris.net/nexus/content/repositories/snapshots</snapshot.repo.url>
         <release.repo.url>https://nexus.adaptris.net/nexus/content/repositories/releases</release.repo.url>
     </properties>

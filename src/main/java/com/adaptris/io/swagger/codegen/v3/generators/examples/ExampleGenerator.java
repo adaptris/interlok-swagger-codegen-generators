@@ -1,5 +1,6 @@
 package com.adaptris.io.swagger.codegen.v3.generators.examples;
 
+import com.adaptris.io.swagger.codegen.v3.generators.util.OpenAPIUtil;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.BooleanSchema;
@@ -18,8 +19,6 @@ import io.swagger.v3.core.util.Json;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.adaptris.io.swagger.codegen.v3.generators.util.OpenAPIUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -196,6 +195,10 @@ public class ExampleGenerator {
             Schema innerType = ((ArraySchema) schema).getItems();
             if (innerType != null) {
                 int arrayLength = schema.getMaxItems() != null ? schema.getMaxItems() : 2;
+                if (arrayLength > 10) {
+                    logger.warn("value of maxItems of property {} is {}; limiting to 10 examples", schema, arrayLength);
+                    arrayLength = 10;
+                }
                 Object[] objectProperties = new Object[arrayLength];
                 Object objProperty = resolveSchemaToExample(propertyName, mediaType, innerType, processedModels);
                 for(int i=0; i < arrayLength; i++) {

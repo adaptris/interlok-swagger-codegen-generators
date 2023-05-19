@@ -30,6 +30,8 @@ import org.testng.annotations.Test;
 import com.adaptris.io.swagger.codegen.v3.generators.DefaultCodegenConfig;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -310,6 +312,22 @@ public class DefaultCodegenConfigTest {
         Assert.assertEquals(headerProperty.description, referencedHeader.getSchema().getDescription());
         Assert.assertEquals(headerProperty.datatype, "String");
         Assert.assertEquals(headerProperty.example, referencedHeader.getSchema().getExample());
+    }
+
+    @Test(dataProvider = "testCommonPrefixProvider")
+    public void testCommonPrefix(List<Object> vars, String expectedPrefix) {
+        DefaultCodegenConfig codegen = new P_DefaultCodegenConfig();
+        Assert.assertEquals(codegen.findCommonPrefixOfVars(vars), expectedPrefix);
+    }
+
+    @DataProvider(name = "testCommonPrefixProvider")
+    public Object[][] provideData_testCommonPrefix() {
+        return new Object[][]{
+            {Collections.singletonList("FOO_BAR"), ""},
+            {Arrays.asList("FOO_BAR", "FOO_BAZ"), "FOO_"},
+            {Arrays.asList("FOO_BAR", "FOO_BAZ", "TEST"), ""},
+            {Arrays.asList("STATUS-ON", "STATUS-OFF", "STATUS"), ""}
+        };
     }
 
     private static class P_DefaultCodegenConfig extends DefaultCodegenConfig{
