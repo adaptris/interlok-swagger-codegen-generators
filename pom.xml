@@ -336,7 +336,7 @@
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.22.2</surefire-version>
         <jmockit-version>1.42</jmockit-version>
-        <reflections-version>0.9.11</reflections-version>
+        <reflections-version>0.10.2</reflections-version>
         
         <snapshot.repo.url>https://nexus.adaptris.net/nexus/content/repositories/snapshots</snapshot.repo.url>
         <release.repo.url>https://nexus.adaptris.net/nexus/content/repositories/releases</release.repo.url>
