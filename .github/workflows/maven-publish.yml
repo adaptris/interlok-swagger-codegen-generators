@@ -8,7 +8,8 @@ on:
 #    - cron: 0 3 * * * # Daily 3 a.m.
 
 env:
-  PUBLISH_SERVER: 'adaptris-snapshots'
+  PUBLISH_SNAPSHOT_SERVER: 'adaptris-snapshots'
+  PUBLISH_RELEASE_SERVER: 'adaptris-releases'
 
 jobs:
   gradle-publish:
@@ -40,7 +41,7 @@ jobs:
     - name: Set up maven settings.xml
       uses: s4u/maven-settings-action@v2.6.0
       with:
-        servers: '[{"id": "${{ env.PUBLISH_SERVER }}", "username": "deployment", "password": "${{ secrets.NEXUS_REPO_PASSWORD }}"}]'
+        servers: '[{"id": "${{ env.PUBLISH_SNAPSHOT_SERVER }}", "username": "deployment", "password": "${{ secrets.NEXUS_REPO_PASSWORD }}"},{"id": "${{ env.PUBLISH_RELEASE_SERVER }}", "username": "deployment", "password": "${{ secrets.NEXUS_REPO_PASSWORD }}"}]'
     - name: Publish package
       if: success()
       run: |
