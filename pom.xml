@@ -311,7 +311,7 @@
         <swagger-codegen-version>3.0.43</swagger-codegen-version>
         <swagger-parser-version>2.1.15</swagger-parser-version>
         <swagger-core-version>2.2.10</swagger-core-version>
-        <jackson-version>2.15.1</jackson-version>
+        <jackson-version>2.15.2</jackson-version>
         <jackson-databind-version>2.15.2</jackson-databind-version>
 <!--         <scala-version>2.11.1</scala-version> -->
 <!--         <felix-version>3.3.0</felix-version> -->
