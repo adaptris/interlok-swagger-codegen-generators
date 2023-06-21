@@ -336,7 +336,7 @@
 <!--         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version> -->
         <testng-version>6.9.6</testng-version>
         <surefire-version>2.22.2</surefire-version>
-        <jmockit-version>1.42</jmockit-version>
+        <jmockit-version>1.49</jmockit-version>
         <reflections-version>0.9.11</reflections-version>
         
         <snapshot.repo.url>https://nexus.adaptris.net/nexus/content/repositories/snapshots</snapshot.repo.url>
