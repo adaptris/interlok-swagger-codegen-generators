@@ -26,6 +26,3 @@ jobs:
     - name: codecov.io
       if: ${{!github.event.repository.private}}
       uses: codecov/codecov-action@v3.1.4
-    - name: Gradle Dependency Check Analyze
-      run: |
-        mvn dependency-check:check
