@@ -1,0 +1,7 @@
+openapi: 3.0.1
+info:
+  title: Gatekeeper Lookup API
+  description: Gatekeeper Lookups
+  version: 0.0.1
+servers:
+- url: http://test.host.com:8080/

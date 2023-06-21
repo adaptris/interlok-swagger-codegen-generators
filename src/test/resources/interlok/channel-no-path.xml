@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gatekeeper Lookup API 0.0.1 (Gatekeeper Lookups) -->
+<channel>
+  <unique-id>Gatekeeper Lookup API</unique-id>
+  <auto-start>false</auto-start>
+  <consume-connection class="jetty-embedded-connection">
+    <unique-id>Embedded Jetty Connection</unique-id>
+  </consume-connection>
+  <workflow-list>
+  </workflow-list>
+</channel>

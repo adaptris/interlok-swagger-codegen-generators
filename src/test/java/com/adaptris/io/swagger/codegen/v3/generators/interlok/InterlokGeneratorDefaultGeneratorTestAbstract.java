@@ -85,6 +85,16 @@ public abstract class InterlokGeneratorDefaultGeneratorTestAbstract extends Abst
   }
 
   @Test
+  public void testGenerateFromYamlNoPath() throws Exception {
+    testGenerateFrom("src/test/resources/interlok/channel-no-path.yaml", getExpectedXmlFilePathPrefix() + "-no-path.xml");
+  }
+
+  @Test
+  public void testGenerateFromJsonNoPath() throws Exception {
+    testGenerateFrom("src/test/resources/interlok/channel-no-path.json", getExpectedXmlFilePathPrefix() + "-no-path.xml");
+  }
+
+  @Test
   public void testGenerateFromNull() throws Exception {
     OpenAPI openApi = parse(null);
     assertNull(openApi);
@@ -106,24 +116,6 @@ public abstract class InterlokGeneratorDefaultGeneratorTestAbstract extends Abst
       new DefaultGenerator().opts(clientOptInput).generate();
       fail("Should have thrown a RuntimeException");
     } catch (RuntimeException rte) {
-      // Should come here
-    }
-  }
-
-  @Test
-  public void testGenerateFromNoPath() throws Exception {
-    try {
-      final File output = folder.getRoot();
-
-      final OpenAPI openApi = parse("{\"openapi\":\"3.0.3\"}");
-      CodegenConfig codegenConfig = getCodegenConfig();
-      codegenConfig.setOutputDir(output.getAbsolutePath());
-
-      ClientOptInput clientOptInput = new ClientOptInput().opts(new ClientOpts()).openAPI(openApi).config(codegenConfig);
-
-      new DefaultGenerator().opts(clientOptInput).generate();
-      fail("Should have thrown a NullPointerException");
-    } catch (NullPointerException npe) {
       // Should come here
     }
   }
