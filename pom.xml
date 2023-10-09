@@ -308,7 +308,7 @@
     </dependencies>
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
-        <swagger-codegen-version>3.0.46</swagger-codegen-version>
+        <swagger-codegen-version>3.0.47</swagger-codegen-version>
         <swagger-parser-version>2.1.16</swagger-parser-version>
         <swagger-core-version>2.2.16</swagger-core-version>
         <jackson-version>2.15.2</jackson-version>
