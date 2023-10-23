@@ -87,7 +87,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.10</version>
+                <version>0.8.11</version>
                 <executions>
                     <execution>
                         <id>initialize</id>
@@ -321,7 +321,7 @@
     </dependencies>
     <properties>
         <swagger-codegen-version>3.0.48</swagger-codegen-version>
-        <swagger-parser-version>2.1.16</swagger-parser-version>
+        <swagger-parser-version>2.1.18</swagger-parser-version>
         <swagger-core-version>2.2.17</swagger-core-version>
         <jackson-version>2.15.3</jackson-version>
         <jackson-databind-version>2.15.3</jackson-databind-version>
