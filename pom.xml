@@ -310,7 +310,7 @@
         <maven.compiler.release>11</maven.compiler.release>
         <swagger-codegen-version>3.0.50</swagger-codegen-version>
         <swagger-parser-version>2.1.18</swagger-parser-version>
-        <swagger-core-version>2.2.18</swagger-core-version>
+        <swagger-core-version>2.2.19</swagger-core-version>
         <jackson-version>2.16.0</jackson-version>
         <jackson-databind-version>2.16.0</jackson-databind-version>
 <!--         <scala-version>2.11.1</scala-version> -->
