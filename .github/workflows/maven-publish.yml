@@ -39,7 +39,7 @@ jobs:
       if: ${{!github.event.repository.private}}
       uses: codecov/codecov-action@v3.1.4
     - name: Set up maven settings.xml
-      uses: s4u/maven-settings-action@v2.8.0
+      uses: s4u/maven-settings-action@v3.0.0
       with:
         servers: '[{"id": "${{ env.PUBLISH_SNAPSHOT_SERVER }}", "username": "deployment", "password": "${{ secrets.NEXUS_REPO_PASSWORD }}"},{"id": "${{ env.PUBLISH_RELEASE_SERVER }}", "username": "deployment", "password": "${{ secrets.NEXUS_REPO_PASSWORD }}"}]'
     - name: Publish package
