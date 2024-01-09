@@ -22,7 +22,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.12.1</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
@@ -308,11 +308,11 @@
     </dependencies>
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
-        <swagger-codegen-version>3.0.51</swagger-codegen-version>
+        <swagger-codegen-version>3.0.52</swagger-codegen-version>
         <swagger-parser-version>2.1.19</swagger-parser-version>
-        <swagger-core-version>2.2.19</swagger-core-version>
+        <swagger-core-version>2.2.20</swagger-core-version>
         <jackson-version>2.16.1</jackson-version>
-        <jackson-databind-version>2.16.0</jackson-databind-version>
+        <jackson-databind-version>2.16.1</jackson-databind-version>
 <!--         <scala-version>2.11.1</scala-version> -->
 <!--         <felix-version>3.3.0</felix-version> -->
         <commons-io-version>2.15.1</commons-io-version>
@@ -320,9 +320,9 @@
         <junit-version>4.13.2</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <commons-lang-version>3.14.0</commons-lang-version>
-        <slf4j-version>2.0.9</slf4j-version>
+        <slf4j-version>2.0.10</slf4j-version>
 <!--         <scala-maven-plugin-version>3.2.1</scala-maven-plugin-version> -->
-        <testng-version>7.8.0</testng-version>
+        <testng-version>7.9.0</testng-version>
         <surefire-version>3.0.0</surefire-version>
         <jmockit-version>1.49</jmockit-version>
         <reflections-version>0.10.2</reflections-version>
